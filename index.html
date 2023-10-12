@@ -1,0 +1,85 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://hernadi-antikvarium.hu/includes/css/materialize.min.css" />
+    <link rel="stylesheet" href="https://hernadi-antikvarium.hu/includes/css/style.css" />
+
+    <title>Hernádi Antikvárium Search</title>
+  </head>
+
+  <body>
+
+  <div class="navbar-fixed">
+    <nav class="white nav-extended" id="extendedNav">
+      <div class="nav-wrapper row">
+
+        <a href="" class="brand-logo night">
+          <img src="https://hernadi-antikvarium.hu/images/pgd/logo-blue.png" alt="Hernádi Antikvárium">
+        </a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse black-text"><i class="material-icons">menu</i></a>
+        <a href="kosar" class="cart-button hide-on-large-only right cyan lighten-2"><i class="material-icons">shopping_cart</i><label class="deep-orange" id="cartLabel2">0</label></a>
+        <a class="show-search hide-on-large-only right black-text" id="searchbutton"><i class="material-icons">search</i></a>
+        <div id="autocomplete" class=" col l7 autocomp"></div>
+
+        <!--<div id="autocomplete"></div>-->
+
+
+        <ul id="nav-mobile" class="right hide-on-med-and-down col l5 black-text"><li><a href="http://auth.hernadi-antikvarium.hu/" class="cyan-text text-accent-4"><i class="material-icons left"></i><span>Bejelentkezés</span></a></li><li><a href="https://auth.hernadi-antikvarium.hu/?regisztracio" class="waves-effect waves-light btn cyan lighten-4 cyan-text text-darken-4">Regisztráció</a></li></ul>
+        <ul class="tabs cyan lighten-2 hide-on-med-and-down white-text" id="desktopTabs">
+          <li class="tab white-text"><a id="main_menu_bookboard" target="_self" href="" class="active"><i class="material-icons  left"></i><span>Főoldal</span></a></li>	      <li class="tab white-text"><a id="main_menu_info" target="_self" href="hasznos-informacio" class=" "><i class="material-icons  left"></i><span>Tudnivalók</span></a></li>	      <li class="tab white-text"><a id="main_menu_cartpage" target="_self" href="kosar?1696270914137" class=" "><i class="material-icons  left"></i><span>Kosár</span><span id="cartLabel" class="amber badge hide-on-small-only hide lighten-1" title="0 termék a kosárban">0</span></a></li>	      <li class="tab white-text"><a id="main_menu_genre" target="_self" href="kategoria" class=" "><i class="material-icons  left"></i><span>Kategóriák</span></a></li>	      <li class="tab white-text"><a id="main_menu_authors" target="_self" href="iro" class=" "><i class="material-icons  left"></i><span>Írók</span></a></li>	      <li class="tab white-text"><a id="main_menu_sales" target="_self" href="akciok" class=" "><i class="material-icons deep-orange-text text-accent-3 left"></i><span>Akciók</span></a></li>
+          <div class="indicator" style="right: 1305px; left: 0px;"></div><div class="indicator" style="right: 1305px; left: 0px;"></div></ul><ul class="side-nav" id="mobile-demo" style="width: 240px; transform: translateX(-100%);"><li class="blue-grey-text cyan lighten-5 z-depth-1"><a href="http://auth.hernadi-antikvarium.hu/" class="modal-trigger cyan-text text-accent-4"><i class="material-icons left cyan-text"></i><span>Bejelentkezés</span></a></li><li class="blue-grey-text"><a target="_self" href="https://auth.hernadi-antikvarium.hu/?regisztracio" class=""><i class="material-icons left light-green-text"></i><span>Regisztráció</span></a></li><li><div class="divider"></div></li><li><a class="subheader thin"><b>Hernádi</b> Antikvárium</a></li>
+        <li class="blue-grey-text"><a id="main_menu_bookboard" target="_self" href="" class="active "><i class="material-icons  left"></i><span>Főoldal</span></a></li>	      <li><a id="main_menu_info" target="_self" href="hasznos-informacio" class=" "><i class="material-icons  left"></i><span>Tudnivalók</span></a></li>	      <li><a id="main_menu_cartpage" target="_self" href="kosar" class=" "><i class="material-icons  left"></i><span>Kosár</span><span id="cartLabel" class="amber badge hide-on-small-only hide" title="0 termék a kosárban">0</span></a></li>	      <li><a id="main_menu_genre" target="_self" href="kategoria" class=" "><i class="material-icons  left"></i><span>Kategóriák</span></a></li>	      <li><a id="main_menu_authors" target="_self" href="iro" class=" "><i class="material-icons  left"></i><span>Írók</span></a></li>	      <li><a id="main_menu_sales" target="_self" href="akciok" class=" "><i class="material-icons deep-orange-text text-accent-3 left"></i><span>Akciók</span></a></li>
+      </ul>
+      </div>
+    </nav>
+  </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the search button and autocomplete div elements
+        var searchButton = document.getElementById("searchbutton");
+        var autocompleteDiv = document.getElementById("autocomplete");
+
+        // Add a click event listener to the search button
+        searchButton.addEventListener("click", function () {
+          // Toggle the "mobile" class on the autocomplete div
+          autocompleteDiv.classList.toggle("mobile");
+        });
+      });
+    </script>
+    <script type="module" >
+      function initTheme() {
+          applyLightTheme();
+      }
+
+      export function isDarkThemeSelected() {
+        return localStorage.getItem('darkMode') === 'dark';
+      }
+
+      function applyDarkTheme() {
+        document.body.setAttribute('data-theme', 'dark');
+        localStorage.setItem('darkMode', 'dark');
+      }
+
+      function applyLightTheme() {
+        document.body.removeAttribute('data-theme');
+        localStorage.removeItem('darkMode');
+      }
+
+      export function toggleTheme() {
+        if (isDarkThemeSelected()) {
+          applyLightTheme();
+        } else {
+          applyDarkTheme();
+        }
+      }
+
+      initTheme();
+    </script>
+    <script type="module" src="app.tsx"></script>
+  </body>
+</html>

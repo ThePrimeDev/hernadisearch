@@ -1,0 +1,64 @@
+
+.autocomp{
+  position: absolute;
+  padding-top: auto;
+  height: 64px !important;
+  padding-left: 140px !important;
+}
+
+@media only screen and (max-width: 992px){
+  .hide-on-yes-and-down {
+    display: none;
+  }
+}
+
+.mobile{
+  display: block !important;
+  top: 56px;
+  width: 100%;
+  padding: 0 !important;
+  background-color: #01bacb;
+}
+
+.aa-Autocomplete{
+  height: 100%;
+}
+
+.aa-Form {
+ padding: 5px;
+ padding-right: 16px;
+ border: none !important;
+ background-color: #e0f7fa !important;
+}
+
+.ais-Hits {
+  margin-top: 1rem;
+}
+
+.ais-Hits-list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  list-style: none;
+  padding: 0;
+}
+
+.ais-Hits-item {
+  background: rgba(128, 126, 163, 0.08);
+  border-radius: 5px;
+  height: 100%;
+  min-height: 202px;
+  padding: 1rem;
+  width: 100%;
+}
+
+.aa-SourceHeaderLine, .aa-SourceHeaderTitle, .aa-SubmitButton, .aa-SubmitIcon{
+  color: #01bacb !important;
+}
+.aa-SourceHeaderLine{
+  border-bottom: 1px solid #01bacb !important;
+}
+
+.aa-Panel{
+  z-index: 1000 !important;
+}
