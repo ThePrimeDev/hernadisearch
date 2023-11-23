@@ -83,10 +83,14 @@ function createCategoriesPlugin({
         sort_by: '_text_match:desc',
         prioritize_exact_match: true,
         per_page: 5,
-        group_by: 'DID',
+        //group_by: 'DID',
         facet_query: `categories:${query}`,
         facet_by: "categories",
+        use_cache: true,
       })  
+      if(!query || query == ""){
+        return [];
+      }
       return [
         {
           sourceId: 'categoriesPlugin',
@@ -169,10 +173,14 @@ function createAuthorsPlugin({
         sort_by: '_text_match:desc',
         prioritize_exact_match: true,
         per_page: 5,
-        group_by: 'DID',
+        //group_by: 'DID',
         facet_query: `authors:${query}`,
         facet_by: "authors",
-      })  
+        use_cache: true,
+      })
+      if(!query || query == ""){
+        return [];
+      }
       return [
         {
           sourceId: 'authorsPlugin',
@@ -266,30 +274,46 @@ const authorsPlugin = createAuthorsPlugin({ typesenseClient });
 autocomplete<ProductHit>({
   container: "#autocomplete",
   placeholder: "Keresés",
-  debug: true,
+  //debug: true,
   openOnFocus: true,
   plugins: [
-    //algoliaInsightsPlugin,
     recentSearchesPlugin,
     categoriesPlugin,
     authorsPlugin,
-    //querySuggestionsPlugin,
   ],
+  onSubmit({ state,event }) {
+    //NOT Working!
+    event.preventDefault(); 
+    
+    var urlPath= window.location.pathname;
+    window.location.href = `/kereses?q=${state.query}`
+    
+  },
   //TERMÉKEK LISTÁJA
   async getSources({query}) {
-    const results = await typesenseClient.collections('books').documents().search({
+    const results = !query || query == "" ? await typesenseClient.collections('books').documents().search({
+      q: query,
+      query_by: "title",
+      sort_by: 'created_date:desc',
+      per_page: 5,
+      use_cache: true,
+      //group_by: 'DID',
+      //limit_hits: 5,
+    }) : await typesenseClient.collections('books').documents().search({
       q: query,
       query_by: "title, authors",
       sort_by: '_text_match:desc,rating:desc',
       prioritize_exact_match: true,
       per_page: 5,
-      group_by: 'DID',
+      use_cache: true,
+      //group_by: 'DID',
+      //limit_hits: 5,
     })
     return [
         {
           sourceId: 'predictions',
           getItems() {
-            return results.grouped_hits;
+            return results.hits;
           },
           getItemInputValue({item}) {
             return item;
@@ -307,7 +331,7 @@ autocomplete<ProductHit>({
               //console.log(JSON.stringify(item.hits[0].document));
               return (
                 <ProductItem
-                  hit={item.hits[0].document}
+                  hit={item.document}
                   components={components}
                   //insights={state.context.algoliaInsightsPlugin.insights}
                 />
@@ -319,6 +343,26 @@ autocomplete<ProductHit>({
           },
       },
     ];
+  },
+  render({ elements, render, html }, root) {
+    const { recentSearchesPlugin, categoriesPlugin, authorsPlugin, predictions } = elements;
+    render(
+      recentSearchesPlugin || categoriesPlugin || authorsPlugin ?  
+      html`
+        <div class="aa-PanelLayout aa-Panel--scrollable">
+          <div class="aa-PanelElement--Left">${recentSearchesPlugin} ${authorsPlugin} ${categoriesPlugin}</div>
+          <div class="aa-PanelElement-Spacer"></div>
+          <div class="aa-PanelElement--Right">${predictions}</div>
+        </div>
+      ` :
+      html`
+        <div class="aa-PanelLayout aa-Panel--scrollable">
+          <div class="aa-PanelElement--Right">${predictions}</div>
+        </div>
+      `
+      ,
+      root
+    )
   },
 });
 

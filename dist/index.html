@@ -3,13 +3,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="/assets/hernadi-search.png" type="image/x-icon" />
+    
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="https://hernadi-antikvarium.hu/includes/css/materialize.min.css" />
     <link rel="stylesheet" href="https://hernadi-antikvarium.hu/includes/css/style.css" />
 
     <title>Hernádi Antikvárium Search</title>
+    <script type="module" crossorigin src="/assets/hernadi-search.js"></script>
+    <link rel="stylesheet" href="/assets/hernadi-search.css">
   </head>
 
   <body>
@@ -51,35 +53,7 @@
         });
       });
     </script>
-    <script type="module" >
-      function initTheme() {
-          applyLightTheme();
-      }
-
-      export function isDarkThemeSelected() {
-        return localStorage.getItem('darkMode') === 'dark';
-      }
-
-      function applyDarkTheme() {
-        document.body.setAttribute('data-theme', 'dark');
-        localStorage.setItem('darkMode', 'dark');
-      }
-
-      function applyLightTheme() {
-        document.body.removeAttribute('data-theme');
-        localStorage.removeItem('darkMode');
-      }
-
-      export function toggleTheme() {
-        if (isDarkThemeSelected()) {
-          applyLightTheme();
-        } else {
-          applyDarkTheme();
-        }
-      }
-
-      initTheme();
-    </script>
-    <script type="module" src="app.tsx"></script>
+    
+    
   </body>
 </html>
